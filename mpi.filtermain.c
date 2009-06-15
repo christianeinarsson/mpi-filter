@@ -57,21 +57,10 @@ int main (int argc, char * argv[]) {
 
 	int radius = MAX_RAD + 10;
 	int xsize, ysize;
-	//int blockdata[BLOCKDATA_SIZE];
 
 	int * blockdata = malloc((BLOCKDATA_SIZE) * sizeof(int));
-	//long blockdata[BLOCKDATA_SIZE];
 	pixel *src;
 
-	/*
-	*
-	* Fix clocking later
-	*
-	*
-
-	struct timespec stime, etime;
-
-	*/
 
 	pmesg(50, "Process %d of %d\n",me,np);
 
@@ -148,7 +137,6 @@ int main (int argc, char * argv[]) {
 		int blur_symdef;
 		VT_funcdef("Filter:Blur", VT_NOCLASS, &blur_symdef);
 		VT_enter(blur_symdef, VT_NOSCL);
-		//pixel local_src[blockdata[SCATTER_SIZE + me]];
 		if(me==0)pmesg(50, "will allocate local_src\n");
 		local_src = (pixel *) malloc(blockdata[SCATTER_SIZE + me]*sizeof(pixel));
 		if(me==0)pmesg(50, "will bcast weight\n");
@@ -182,8 +170,6 @@ int main (int argc, char * argv[]) {
 		int threshold_symdef;
 		VT_funcdef("Filter:Threshold", VT_NOCLASS, &threshold_symdef);
 		VT_enter(threshold_symdef, VT_NOSCL);
-
-		//pixel local_src[GATHER_SIZE + me];
 
 		local_src = (pixel *) malloc(blockdata[GATHER_SIZE + me]*sizeof(pixel));
 

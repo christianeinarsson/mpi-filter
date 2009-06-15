@@ -47,14 +47,6 @@ int func_statehandle;
 			blockdata[SCATTER_SIZE + i] = blockdata[GATHER_LOCAL_OFFSET + i] + blockdata[GATHER_SIZE + i] + (ysize - end_of_local_block)*xsize;
 		}
 
-		/*printf("Block %i partition data:\n" , i);
-		printf("\t%10i : %4i - scatter offset\n", 		blockdata[SCATTER_OFFSET + i],		(int)blockdata[SCATTER_OFFSET + i]/xsize);
-		printf("\t%10i : %4i - scatter size\n"  ,			blockdata[SCATTER_SIZE + i],			(int)blockdata[SCATTER_SIZE + i]/xsize);
-		printf("\t%10i : %4i - gather global offset\n",	blockdata[GATHER_GLOBAL_OFFSET + i],(int)blockdata[GATHER_GLOBAL_OFFSET + i]/xsize);
-		printf("\t%10i : %4i - gather local offset\n",	blockdata[GATHER_LOCAL_OFFSET + i],	(int)blockdata[GATHER_LOCAL_OFFSET + i]/xsize);
-		printf("\t%10i : %4i - gather local size\n",		blockdata[GATHER_SIZE + i],			(int)blockdata[GATHER_SIZE + i]/xsize);
-
-	* */
 	}
 
 VT_leave(VT_NOSCL);
