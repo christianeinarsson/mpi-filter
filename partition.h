@@ -2,14 +2,50 @@
 #define _PARTITION_H_
 
 
-#define SCATTER_OFFSET			0
-#define SCATTER_SIZE				1*np
-#define GATHER_GLOBAL_OFFSET	2*np
-#define GATHER_LOCAL_OFFSET	3*np
-#define GATHER_SIZE				4*np
-#define X_SIZE						5*np
-#define BLOCKDATA_SIZE			5*np+1
+/*
+ * Define offsets for datastoring in the blockdata array with partition data.
+ * process specific data should be accessed the following way
+ * bd[DATANAME + processid]. For example bd[GATHER_SIZE + me]
+ * The advantagde from this aproach is
+ * 	Everything the partitions need to know about themself and others are
+ * 		stored in one array easiely brodcasted to everyone
+ * 	Arrays of offsets and otherthings are needed when doing scatterv and
+ * 		gatherv
+ * Every size and offset is in pixels
+ * */
 
+/*
+ * SCATTER_OFFSET - 			The offset of the first pixel for each process
+ * 								(including the radius)
+ * */
+#define SCATTER_OFFSET			0
+/*
+ * SCATTER_SIZE - 			The number of pixel each process are to receive
+ * */
+#define SCATTER_SIZE				1*np
+/*
+ * GATHER_GLOBAL_OFFSET -	The offset where the result from each process should
+ * 								start in the finished picture
+ * */
+#define GATHER_GLOBAL_OFFSET	2*np
+/*
+ * GATHER_LOCAL_OFFSET - 	The offset in each local partition to the actual part
+ * 								alloted to it (excluding radius).
+ * */
+#define GATHER_LOCAL_OFFSET	3*np
+/*
+ * GATHER_SIZE	- 				The size to gather from each process, also the size
+ * 								the process should filter.
+ * */
+#define GATHER_SIZE				4*np
+/*
+ * X_SIZE - 					The width of the picture
+ * */
+#define X_SIZE						5*np
+/*
+ * BLOCKDATA_SIZE				The size of the blockdata array.
+ * */
+#define BLOCKDATA_SIZE			5*np+1
 
 
 

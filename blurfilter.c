@@ -10,17 +10,21 @@
 #include "pixel.h"
 
 
-// The algorithm seems to apply the filter x-wise on src and write it to dst
-// then it applies it y-wise on dst and writes to src.
-// Maybe it could be posible to make the write operation do a transponate of
-// the 'matrix' to lessen the cache misses when applying the filter y-wise
-//
-// Changed to fist y-wise then x-wise to eliminate black lines.
+
+/*
+ * Changed to first y-wise then x-wise to eliminate black lines.
+ * When doing x-wise first the radius dont get copied to dst, if we do
+ * y-wise first then radius is avalible when needed and there is no need
+ * to copy it to dst.
+ * We also introduced the input variable ystop to hinder the filter to
+ * continue filtering down through the radius belowe the alotted partition.
+ * */
 
 void blurfilter(const int y_start, const int xsize, const int ysize, pixel* src, const int radius, const double *w, const int ystop){
 	int x,y,x2,y2, wi;
 	double r,g,b,n, wc;
-	pixel dst[MAX_PIXELS];
+	//pixel dst[MAX_PIXELS];
+	pixel dst[xsize*ysize];
 
 
 	for (y=y_start; y<ystop; y++) {
