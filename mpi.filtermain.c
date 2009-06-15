@@ -227,7 +227,6 @@ int main (int argc, char * argv[]) {
 		int my_threshold = threshold(blockdata[GATHER_SIZE + me], local_src);
 		pmesg(50, "Process %d: my_threshold=%d\n",me, my_threshold);
 
-
 		/*
 		 * Collect the local theshold values with MPI_Allreduce sum.
 		 * */
@@ -257,7 +256,13 @@ int main (int argc, char * argv[]) {
 	 * Let process one write the result to disk.
 	 * */
 	if((me==0)&&(write_ppm (argv[3], xsize, ysize, (char *)src) != 0)){
+		/*
+	 	* Write failed, close down MPI and tracing and exit with status 1.
+	 	* */
+		pmesg(50, "Failed to write result.");
 		MPI_Finalize();
+		VT_leave(VT_NOSCL);
+		VT_finalize();
 		exit(1);
 	}
 
@@ -265,9 +270,6 @@ int main (int argc, char * argv[]) {
 	 * Close down MPI and tracing.
 	 * */
 	MPI_Finalize();
-
-	VT_leave(VT_NOSCL);
-	VT_finalize();
 
 	return(0);
 }
