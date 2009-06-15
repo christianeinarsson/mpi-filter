@@ -3,7 +3,7 @@
 /*
   File: thresfilter.h
 
-  Declaration of pixel structure and thresfilter function.
+  Declaration of thresfilter function.
 
  */
 #ifndef _THRESFILTER_H_

@@ -47,7 +47,15 @@
  * */
 #define BLOCKDATA_SIZE			5*np+1
 
-
+/*
+ * Partitions the image for all processes.
+ * Takes np - number of processes
+ * 		radius - the blur radius
+ * 		xsize,ysize - size of picture
+ * 		blockdata - array to put result in
+ * Returns all data needed to split and filter the picture on multiple processes,
+ * the data is writen to the array using the offsets defined above.
+ * */
 
 void partition(const int np, const int radius, const int xsize, const int ysize, int * blockdata);
 
